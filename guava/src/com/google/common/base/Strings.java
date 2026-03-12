@@ -270,19 +270,21 @@ public final class Strings {
     if (args == null) {
       args = new Object[] {"(Object[])null"};
     }
-
+    // La valeur suivante est issue de java.lang , et est donc non modifiable , elle est cependant utilisée dans ce code, sans être expliquée.
+    int javaLangInitialStringSize = 16;
     // start substituting the arguments into the '%s' placeholders
-    StringBuilder builder = new StringBuilder(template.length() + 16 * args.length);
+    StringBuilder builder = new StringBuilder(template.length() + javaLangInitialStringSize * args.length);
     int templateStart = 0;
     int i = 0;
+    String placeHolderStr = "%s";
     while (i < args.length) {
-      int placeholderStart = template.indexOf("%s", templateStart);
+      int placeholderStart = template.indexOf(placeHolderStr, templateStart);
       if (placeholderStart == -1) {
         break;
       }
       builder.append(template, templateStart, placeholderStart);
       builder.append(lenientToString(args[i++]));
-      templateStart = placeholderStart + 2;
+      templateStart = placeholderStart + placeHolderStr.length();
     }
     builder.append(template, templateStart, template.length());
 
