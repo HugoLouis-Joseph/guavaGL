@@ -55,7 +55,9 @@ abstract class AbstractBaseGraph<N> implements BaseGraph<N> {
       degreeSum += degree(node);
     }
     // According to the degree sum formula, this is equal to twice the number of edges.
+    // Vérifie que le degré est pair
     checkState((degreeSum & 1) == 0);
+    // Divise le degré par deux pour ne pas compter deux fois les arêtes
     return degreeSum >>> 1;
   }
 
