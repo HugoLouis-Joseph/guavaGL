@@ -158,10 +158,10 @@ public final class Preconditions {
   public static void checkArgument(
       boolean expression,
       String errorMessageTemplate,
-      @Nullable Object @Nullable ... args) {
+      @Nullable Object @Nullable ... errorMessageArgs) {
     if (!expression) {
       throw new IllegalArgumentException(
-          lenientFormat(errorMessageTemplate, args));
+          lenientFormat(errorMessageTemplate, errorMessageArgs));
     }
   }
 
@@ -221,10 +221,10 @@ public final class Preconditions {
        * that user first.
        */
       @Nullable String errorMessageTemplate,
-      @Nullable Object @Nullable ... args) {
+      @Nullable Object @Nullable ... errorMessageArgs) {
     if (!expression) {
       throw new IllegalStateException(
-          Platform.lenientFormat(errorMessageTemplate, args));
+          Platform.lenientFormat(errorMessageTemplate, errorMessageArgs));
     }
   }
 
@@ -295,10 +295,10 @@ public final class Preconditions {
   public static <T> T checkNotNull(
       @Nullable T reference,
       String errorMessageTemplate,
-      @Nullable Object @Nullable ... args) {
+      @Nullable Object @Nullable ... errorMessageArgs) {
     if (reference == null) {
       throw new NullPointerException(
-          Platform.lenientFormat(errorMessageTemplate, args));
+          Platform.lenientFormat(errorMessageTemplate, errorMessageArgs));
     }
     return reference;
   }
