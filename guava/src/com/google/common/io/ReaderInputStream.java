@@ -79,39 +79,37 @@ final class ReaderInputStream extends InputStream {
    * the given character set. Malformed input and unmappable characters will be replaced.
    *
    * @param reader input source
-   * @param charset character set used for encoding chars to bytes
    * @param bufferSize size of internal input and output buffers
    * @throws IllegalArgumentException if bufferSize is non-positive
    */
-  ReaderInputStream(Reader reader, Charset charset, int bufferSize) {
-    this(
-        reader,
-        charset
-            .newEncoder()
-            .onMalformedInput(CodingErrorAction.REPLACE)
-            .onUnmappableCharacter(CodingErrorAction.REPLACE),
-        bufferSize);
-  }
-
-  /**
-   * Creates a new input stream that will encode the characters from {@code reader} into bytes using
-   * the given character set encoder.
-   *
-   * @param reader input source
-   * @param encoder character set encoder used for encoding chars to bytes
-   * @param bufferSize size of internal input and output buffers
-   * @throws IllegalArgumentException if bufferSize is non-positive
-   */
-  ReaderInputStream(Reader reader, CharsetEncoder encoder, int bufferSize) {
+  ReaderInputStream(Reader reader, int bufferSize) {
     this.reader = checkNotNull(reader);
-    this.encoder = checkNotNull(encoder);
     checkArgument(bufferSize > 0, "bufferSize must be positive: %s", bufferSize);
-    encoder.reset();
 
     charBuffer = CharBuffer.allocate(bufferSize);
     Java8Compatibility.flip(charBuffer);
 
     byteBuffer = ByteBuffer.allocate(bufferSize);
+  }
+
+  /**
+   * @param charset character set used for encoding chars to bytes
+   */
+  public void setEncoderWithCharset(Charset charset) {
+    this.setEncoderWithCharsetEncoder(
+      charset
+            .newEncoder()
+            .onMalformedInput(CodingErrorAction.REPLACE)
+            .onUnmappableCharacter(CodingErrorAction.REPLACE)
+      );
+  }
+
+  /**
+   * @param encoder @param charset character set encoder used for encoding chars to bytes
+   */
+  public void setEncoderWithCharsetEncoder(CharsetEncoder encoder) {
+    this.encoder = checkNotNull(encoder);
+    encoder.reset();
   }
 
   @Override
