@@ -35,6 +35,8 @@ import com.google.errorprone.annotations.InlineMe;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 
+import com.google.common.math.modes.*;
+
 /**
  * A class for arithmetic on values of type {@code long}. Where possible, methods are defined and
  * named analogously to their {@code BigInteger} counterparts.
@@ -118,31 +120,9 @@ public final class LongMath {
    */
   @SuppressWarnings("fallthrough")
   // TODO(kevinb): remove after this warning is disabled globally
-  public static int log2(long x, RoundingMode mode) {
-    checkPositive("x", x);
-    switch (mode) {
-      case UNNECESSARY:
-        checkRoundingUnnecessary(isPowerOfTwo(x));
-      // fall through
-      case DOWN:
-      case FLOOR:
-        return (Long.SIZE - 1) - Long.numberOfLeadingZeros(x);
-
-      case UP:
-      case CEILING:
-        return Long.SIZE - Long.numberOfLeadingZeros(x - 1);
-
-      case HALF_DOWN:
-      case HALF_UP:
-      case HALF_EVEN:
-        // Since sqrt(2) is irrational, log2(x) - logFloor cannot be exactly 0.5
-        int leadingZeros = Long.numberOfLeadingZeros(x);
-        long cmp = MAX_POWER_OF_SQRT2_UNSIGNED >>> leadingZeros;
-        // floor(2^(logFloor + 0.5))
-        int logFloor = (Long.SIZE - 1) - leadingZeros;
-        return logFloor + lessThanBranchFree(cmp, x);
-    }
-    throw new AssertionError("impossible");
+  public static int log2(long x,ModeToRound mode) {
+    checkPositive("x",x);
+    return mode.log2(x);
   }
 
   /** The biggest half power of two that fits into an unsigned long */
@@ -828,7 +808,7 @@ public final class LongMath {
           }
           return result;
         } else {
-          int nBits = LongMath.log2(n, RoundingMode.CEILING);
+          int nBits = LongMath.log2(n, new Ceiling());
 
           long result = 1;
           long numerator = n--;

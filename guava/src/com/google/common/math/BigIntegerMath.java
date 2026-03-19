@@ -32,6 +32,8 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.math.modes.*;
+
 /**
  * A class for arithmetic on values of type {@code BigInteger}.
  *
@@ -398,8 +400,8 @@ public final class BigIntegerMath {
     product >>= shift;
 
     // Use floor(log2(num)) + 1 to prevent overflow of multiplication.
-    int productBits = LongMath.log2(product, FLOOR) + 1;
-    int bits = LongMath.log2(startingNumber, FLOOR) + 1;
+    int productBits = LongMath.log2(product, new Floor()) + 1;
+    int bits = LongMath.log2(startingNumber, new Floor()) + 1;
     // Check for the next power of two boundary, to save us a CLZ operation.
     int nextPowerOfTwo = 1 << (bits - 1);
 
@@ -423,7 +425,7 @@ public final class BigIntegerMath {
         productBits = 0;
       }
       product *= normalizedNum;
-      productBits = LongMath.log2(product, FLOOR) + 1;
+      productBits = LongMath.log2(product, new Floor()) + 1;
     }
     // Check for leftovers.
     if (product > 1) {
@@ -478,7 +480,7 @@ public final class BigIntegerMath {
     long numeratorAccum = n;
     long denominatorAccum = 1;
 
-    int bits = LongMath.log2(n, CEILING);
+    int bits = LongMath.log2(n, new Ceiling());
 
     int numeratorBits = bits;
 
