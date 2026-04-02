@@ -1,6 +1,6 @@
 package com.google.common.collect.sets;
 import com.google.common.collect.*;
-import java.util.*;;
+import java.util.*;
 
 public final class SubSet<E> extends AbstractSet<E> {
     private final ImmutableMap<E, Integer> inputSet;

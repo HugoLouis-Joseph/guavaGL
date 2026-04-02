@@ -64,6 +64,7 @@ import java.util.stream.Stream;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.w3c.dom.ranges.Range;
+import com.google.common.collect.sets.*;
 
 /**
  * Static utility methods pertaining to {@link Set} instances. Also see this class's counterparts

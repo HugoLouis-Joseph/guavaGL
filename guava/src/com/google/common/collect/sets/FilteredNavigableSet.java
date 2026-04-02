@@ -1,4 +1,5 @@
 package com.google.common.collect.sets;
+import com.google.common.collect.sets.*;
 import java.util.*;
 
 @GwtIncompatible // NavigableSet

@@ -1,7 +1,5 @@
 package com.google.common.collect.sets;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ForwardingCollection;
+import com.google.common.collect.*;
 
 public final class CartesianSet<E> extends ForwardingCollection<List<E>>
       implements Set<List<E>> {

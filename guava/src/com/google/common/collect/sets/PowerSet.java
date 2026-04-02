@@ -1,10 +1,11 @@
 package com.google.common.collect.sets;
+import com.google.common.collect.sets.*;
 import java.util.*;
 
 public final class PowerSet<E> extends AbstractSet<Set<E>> {
     final ImmutableMap<E, Integer> inputSet;
 
-    PowerSet(Set<E> input) {
+    public PowerSet(Set<E> input) {
       checkArgument(
           input.size() <= 30, "Too many elements to create power set: %s > 30", input.size());
       this.inputSet = Maps.indexMap(input);

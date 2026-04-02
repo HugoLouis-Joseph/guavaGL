@@ -1,5 +1,5 @@
 package com.google.common.collect.sets;
-import com.google.common.collect.Sets;
+import com.google.common.collect.sets.*;
 
 public static class FilteredSet<E extends @Nullable Object> extends FilteredCollection<E>
       implements Set<E> {

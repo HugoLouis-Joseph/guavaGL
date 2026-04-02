@@ -1,9 +1,8 @@
 package com.google.common.collect.sets;
-import com.google.common.collect.Sets;
-import java.util.SortedSet;
-import java.util.Comparator;
+import com.google.common.collect.sets.*;
+import java.util.*;
 
-private static class FilteredSortedSet<E extends @Nullable Object> extends FilteredSet<E>
+public static class FilteredSortedSet<E extends @Nullable Object> extends FilteredSet<E>
       implements SortedSet<E> {
 
     FilteredSortedSet(SortedSet<E> unfiltered, Predicate<? super E> predicate) {
