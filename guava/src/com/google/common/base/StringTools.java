@@ -33,7 +33,7 @@ import org.jspecify.annotations.Nullable;
  * @since 3.0
  */
 @GwtCompatible
-public final class Strings {
+public final class StringTools {
   private Strings() {}
 
   /**
