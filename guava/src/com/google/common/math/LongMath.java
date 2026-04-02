@@ -53,6 +53,41 @@ import com.google.common.math.modes.*;
  */
 @GwtCompatible
 public final class LongMath {
+
+  /*
+   * If n <= millerRabinBases[i][0], then testing n against bases millerRabinBases[i][1..] suffices
+   * to prove its primality. Values from miller-rabin.appspot.com.
+   *
+   * NOTE: We could get slightly better bases that would be treated as unsigned, but benchmarks
+   * showed negligible performance improvements.
+   */
+  private static final long[][] millerRabinBaseSets = {
+    {291830, 126401071349994536L},
+    {885594168, 725270293939359937L, 3569819667048198375L},
+    {273919523040L, 15, 7363882082L, 992620450144556L},
+    {47636622961200L, 2, 2570940, 211991001, 3749873356L},
+    {
+      7999252175582850L,
+      2,
+      4130806001517L,
+      149795463772692060L,
+      186635894390467037L,
+      3967304179347715805L
+    },
+    {
+      585226005592931976L,
+      2,
+      123635709730000L,
+      9233062284813009L,
+      43835965440333360L,
+      761179012939631437L,
+      1263739024124850375L
+    },
+    {Long.MAX_VALUE, 2, 325, 9375, 28178, 450775, 9780504, 1795265022}
+  };
+
+
+
   @VisibleForTesting static final long MAX_SIGNED_POWER_OF_TWO = 1L << (Long.SIZE - 2);
 
   /**
@@ -1304,38 +1339,6 @@ public final class LongMath {
       return true;
     }
   }
-
-  /*
-   * If n <= millerRabinBases[i][0], then testing n against bases millerRabinBases[i][1..] suffices
-   * to prove its primality. Values from miller-rabin.appspot.com.
-   *
-   * NOTE: We could get slightly better bases that would be treated as unsigned, but benchmarks
-   * showed negligible performance improvements.
-   */
-  private static final long[][] millerRabinBaseSets = {
-    {291830, 126401071349994536L},
-    {885594168, 725270293939359937L, 3569819667048198375L},
-    {273919523040L, 15, 7363882082L, 992620450144556L},
-    {47636622961200L, 2, 2570940, 211991001, 3749873356L},
-    {
-      7999252175582850L,
-      2,
-      4130806001517L,
-      149795463772692060L,
-      186635894390467037L,
-      3967304179347715805L
-    },
-    {
-      585226005592931976L,
-      2,
-      123635709730000L,
-      9233062284813009L,
-      43835965440333360L,
-      761179012939631437L,
-      1263739024124850375L
-    },
-    {Long.MAX_VALUE, 2, 325, 9375, 28178, 450775, 9780504, 1795265022}
-  };
 
   /*
    * This bitmask is used as an optimization for cheaply testing for divisibility by 2, 3, or 5.
